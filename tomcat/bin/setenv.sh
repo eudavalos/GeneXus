@@ -3,7 +3,11 @@ echo "GeneXus - Setting custom environment variables for Tomcat"
 export CATALINA_OPTS="$CATALINA_OPTS -XX:HeapDumpPath=/logs/tomcat/java_heapdump_pid_%p.log"
 export CATALINA_OPTS="$CATALINA_OPTS -XX:+HeapDumpOnOutOfMemoryError"
 export CATALINA_OPTS="$CATALINA_OPTS -Djava.awt.headless=true"
-set CATALINA_OPTS="-Xms4096m -Xmx8192m"
+export CATALINA_OPTS="-Xms512m -Xmx8192m"
+# Configuración del recolector de basura (G1GC)
+export CATALINA_OPTS="$CATALINA_OPTS -XX:+UseG1GC"
+export CATALINA_OPTS="$CATALINA_OPTS -XX:MaxGCPauseMillis=200"
+export CATALINA_OPTS="$CATALINA_OPTS -XX:G1ReservePercent=20"
 
 if [ -r "$CATALINA_BASE/bin/otelenv.sh" ]; then
   . "$CATALINA_BASE/bin/otelenv.sh"
