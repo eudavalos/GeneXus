@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: main-svc
+  namespace: default
+  labels:
+    app: main-svc
+    genby: genexus
+    du: Main
+spec:
+  ports:
+    - port: 8080
+      name: http
+  selector:
+    app: main-app
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: main-app
+  namespace: default
+  annotations:
+    kubernetes.io/change-cause: "mystorejavaenvironment"
+  labels:
+    app: main-app
+    genby: genexus
+    du: Main
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: main-app
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: main-app
+        genby: genexus
+        du: Main
+    spec:
+      containers:
+      - image: mystorejavaenvironment
+        name: main
+        ports:
+        - containerPort: 8080
+          name: external-port
+        imagePullPolicy: Always
