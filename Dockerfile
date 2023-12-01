@@ -4,4 +4,4 @@ LABEL maintainer="eudavalos <eudavalos91@gmail.com>"
 WORKDIR /usr/local/tomcat/webapps/
 COPY tomcat/bin/setenv.sh /usr/local/tomcat/bin
 RUN [ -d ROOT/ ] && mv ROOT/ ROOT.old/ || true
-ADD ["ROOT.war", "/usr/local/tomcat/webapps/"]
+ADD ["mystore.war", "/usr/local/tomcat/webapps/"]
